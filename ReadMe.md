@@ -5,6 +5,12 @@ A reproducible dataset + static reporting project that scores Linux desktop soft
 - **Wayland** (0–5)
 - **XLibre** as an **X11/Xorg-style compatibility proxy** (0–5)
 
+
+---
+
+## See Report
+[XlibreVWayland](https://jgarza9788.github.io/XlibreVWayland/)
+
 ---
 
 ## What this repo does
