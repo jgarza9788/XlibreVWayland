@@ -1,27 +1,27 @@
 {
-  "total_apps": 500,
+  "total_apps": 7988,
   "wayland_score_counts": {
     "0": 0,
     "1": 0,
     "2": 0,
-    "3": 475,
-    "4": 25,
-    "5": 0
+    "3": 6800,
+    "4": 1172,
+    "5": 16
   },
   "xlibre_score_counts": {
     "0": 0,
     "1": 0,
     "2": 0,
     "3": 0,
-    "4": 457,
-    "5": 43
+    "4": 6442,
+    "5": 1546
   },
   "overlap": {
-    "both_gte_4": 25,
+    "both_gte_4": 1188,
     "wayland_gte_4_xlibre_lte_1": 0,
     "xlibre_gte_4_wayland_lte_1": 0
   },
-  "source_csv": "out/apps.csv",
-  "source_csv_mtime_utc": "2026-03-04T02:32:02.107349+00:00",
-  "site_generated_at_utc": "2026-03-04T02:32:02.272966+00:00"
+  "source_csv": "out\\apps.csv",
+  "source_csv_mtime_utc": "2026-03-04T02:47:33.264727+00:00",
+  "site_generated_at_utc": "2026-03-04T02:47:36.438259+00:00"
 }

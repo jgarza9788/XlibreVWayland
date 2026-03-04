@@ -1,6 +1,6 @@
 # Dataset build notes
 
-Command: python collect_apps.py --limit 500 --seed 123 --out out
+Command: python collect_apps.py --limit 9001 --seed 666 --out out
 
 ## Selection method
 - Flathub: deterministic sort by `downloads` then app id; keep top records.
