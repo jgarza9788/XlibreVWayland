@@ -1,0 +1,5 @@
+body { background-color: #f8f9fa; }
+.card { border-radius: 0.75rem; }
+.table td, .table th { vertical-align: middle; }
+.badge-score { min-width: 2rem; display: inline-block; text-align: center; }
+#appsTable tbody tr:hover { background-color: rgba(13, 110, 253, 0.06); }

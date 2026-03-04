@@ -153,3 +153,28 @@ which shows how mature the transition layer (XWayland) has become.
 [10]: https://krita.org/en/download/?utm_source=chatgpt.com "Download"
 [11]: https://www.blender.org/?utm_source=chatgpt.com "Blender - The Free and Open Source 3D Creation Software ..."
 ```
+
+---
+
+## Rebuilding data and static site
+
+```bash
+# Regenerate app dataset (CSV + JSON source artifacts)
+python collect_apps.py --limit 500 --seed 123 --out out/
+
+# Build GitHub Pages static-site data payloads
+python build_site.py
+
+# Preview locally
+python -m http.server 8000
+# then open http://localhost:8000/docs/
+```
+
+## Single-file static report (GitHub Pages)
+
+```bash
+python collect_apps.py --limit 500 --seed 123 --out out/
+python scripts/build_report.py --csv out/apps.csv --out docs/index.html
+cd docs && python -m http.server 8000
+# open http://localhost:8000
+```
