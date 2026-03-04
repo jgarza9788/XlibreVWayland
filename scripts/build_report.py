@@ -133,15 +133,19 @@ def render_html(apps: list[dict[str, Any]], summary: dict[str, Any]) -> str:
   <title>XLibre v Wayland Report</title>
   <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\" />
   <style>
-    body {{ background:#f8f9fa; }}
+    body {{ background:#0b1220; color:#e5e7eb; }}
+    .bg-panel {{ background:#111827; }}
+    .table {{ --bs-table-bg: transparent; --bs-table-color: #e5e7eb; --bs-table-hover-color: #fff; --bs-table-hover-bg: rgba(255,255,255,.05); }}
+    .text-secondary {{ color:#9ca3af !important; }}
+    a {{ color:#93c5fd; }}
     .card {{ border-radius: .75rem; }}
     .clickable-row {{ cursor:pointer; }}
     .score-badge {{ min-width:2rem; display:inline-block; text-align:center; }}
     footer {{ font-size:.9rem; }}
   </style>
 </head>
-<body>
-<nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">
+<body data-bs-theme="dark">
+<nav class=\"navbar navbar-expand-lg navbar-dark bg-black border-bottom\">
   <div class=\"container\">
     <a class=\"navbar-brand\" href=\"#\">XLibre v Wayland</a>
     <div class=\"navbar-nav ms-auto\">
@@ -152,7 +156,7 @@ def render_html(apps: list[dict[str, Any]], summary: dict[str, Any]) -> str:
   </div>
 </nav>
 
-<header class=\"py-4 border-bottom bg-light\">
+<header class=\"py-4 border-bottom bg-panel\">
   <div class=\"container\">
     <h1 class=\"h3 mb-1\">Linux Display-Stack Compatibility Report</h1>
     <p class=\"mb-1\">Scores are 0–5 where 5 indicates strongest support. XLibre is treated as X11/Xorg-style compatibility.</p>
@@ -163,14 +167,14 @@ def render_html(apps: list[dict[str, Any]], summary: dict[str, Any]) -> str:
 <main class=\"container py-4\">
   <div class=\"row g-4 mb-4\">
     <div class=\"col-12 col-lg-6\">
-      <div class=\"card h-100\"><div class=\"card-body\">
+      <div class=\"card h-100 bg-panel\"><div class=\"card-body\">
         <h2 class=\"h5\">Wayland score distribution</h2>
         <canvas id=\"waylandChart\" height=\"220\"></canvas>
         <table class=\"table table-sm mt-3\" id=\"waylandLegend\"></table>
       </div></div>
     </div>
     <div class=\"col-12 col-lg-6\">
-      <div class=\"card h-100\"><div class=\"card-body\">
+      <div class=\"card h-100 bg-panel\"><div class=\"card-body\">
         <h2 class=\"h5\">XLibre score distribution</h2>
         <canvas id=\"xlibreChart\" height=\"220\"></canvas>
         <table class=\"table table-sm mt-3\" id=\"xlibreLegend\"></table>
@@ -178,7 +182,7 @@ def render_html(apps: list[dict[str, Any]], summary: dict[str, Any]) -> str:
     </div>
   </div>
 
-  <div class=\"card\"><div class=\"card-body\">
+  <div class=\"card bg-panel\"><div class=\"card-body\">
     <div class=\"row g-2 mb-3\">
       <div class=\"col-md-4\"><input id=\"search\" class=\"form-control\" placeholder=\"Search name/category\"></div>
       <div class=\"col-6 col-md-2\"><label class=\"form-label\">Wayland min</label><select id=\"wMin\" class=\"form-select\"></select></div>
