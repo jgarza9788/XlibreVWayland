@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>XLibre v Wayland App Compatibility</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/app.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">XLibre v Wayland</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navMain">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="https://github.com/jgarza9788/XlibreVWayland" target="_blank" rel="noopener">GitHub</a></li>
+            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="data/apps.json" target="_blank">apps.json</a></li>
+            <li class="nav-item"><a class="nav-link" href="data/summary.json" target="_blank">summary.json</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="py-5 bg-light border-bottom">
+      <div class="container">
+        <h1 class="display-6 fw-semibold">Static Compatibility Dashboard</h1>
+        <p class="lead mb-1">A GitHub Pages-friendly static site visualizing Linux app compatibility with Wayland and X11/XLibre-style sessions.</p>
+        <p class="text-secondary mb-0">Scores are 0–5 (higher is better). No backend/API required at runtime.</p>
+      </div>
+    </header>
+
+    <main class="container py-4">
+      <section class="mb-4">
+        <div class="row g-3" id="overlapCards"></div>
+      </section>
+
+      <section class="mb-4">
+        <div class="row g-4">
+          <div class="col-12 col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5">Wayland score distribution</h2>
+                <canvas id="waylandChart" height="220"></canvas>
+                <div class="table-responsive mt-3">
+                  <table class="table table-sm align-middle" id="waylandLegend"></table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5">XLibre (X11-style) score distribution</h2>
+                <canvas id="xlibreChart" height="220"></canvas>
+                <div class="table-responsive mt-3">
+                  <table class="table table-sm align-middle" id="xlibreLegend"></table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-5">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+              <h2 class="h5 mb-0">Search and filter apps</h2>
+              <small class="text-secondary" id="datasetMeta">Loading dataset…</small>
+            </div>
+
+            <div id="loadError" class="alert alert-warning d-none" role="alert"></div>
+
+            <div class="row g-3 mb-3">
+              <div class="col-12 col-md-4">
+                <label class="form-label" for="searchInput">Search (name + category)</label>
+                <input id="searchInput" class="form-control" placeholder="e.g. firefox, editor, terminal" />
+              </div>
+              <div class="col-6 col-md-2">
+                <label class="form-label" for="waylandFilter">Wayland score</label>
+                <select id="waylandFilter" class="form-select"></select>
+              </div>
+              <div class="col-6 col-md-2">
+                <label class="form-label" for="xlibreFilter">XLibre score</label>
+                <select id="xlibreFilter" class="form-select"></select>
+              </div>
+              <div class="col-12 col-md-4">
+                <label class="form-label" for="toolkitFilter">Toolkit</label>
+                <select id="toolkitFilter" class="form-select"></select>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-hover table-sm" id="appsTable">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Category / Type</th>
+                    <th>Recent version</th>
+                    <th>Wayland</th>
+                    <th>XLibre</th>
+                    <th>Confidence</th>
+                    <th>Evidence</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <p class="text-secondary small mb-0" id="resultCount"></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="mb-5">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h5">About / Method</h2>
+            <ul class="mb-2">
+              <li>Site data is loaded from static JSON files in <code>docs/data</code>.</li>
+              <li>Dataset generation: <code>collect_apps.py</code>; site-data conversion: <code>build_site.py</code>.</li>
+              <li>“XLibre” is treated as X11/Xorg-style compatibility in scoring.</li>
+            </ul>
+            <p class="mb-0 text-secondary" id="generatedAt"></p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="modal fade" id="evidenceModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title fs-5" id="evidenceModalTitle">Evidence</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="evidenceModalBody"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="assets/app.js"></script>
+  </body>
+</html>
