@@ -142,6 +142,13 @@ def render_html(apps: list[dict[str, Any]], summary: dict[str, Any]) -> str:
     .clickable-row {{ cursor:pointer; }}
     .score-badge {{ min-width:2rem; display:inline-block; text-align:center; }}
     footer {{ font-size:.9rem; }}
+
+    .text-bg-score-0 {{ background-color: #dc2626; }}
+    .text-bg-score-1 {{ background-color: #fd7e14; }}
+    .text-bg-score-2 {{ background-color: #ffc107; }}
+    .text-bg-score-3 {{ background-color: #6c757d; }}
+    .text-bg-score-4 {{ background-color: #0d6efd; }}
+    .text-bg-score-5 {{ background-color: #198754; }}
   </style>
 </head>
 <body data-bs-theme="dark">
@@ -184,7 +191,7 @@ def render_html(apps: list[dict[str, Any]], summary: dict[str, Any]) -> str:
 
   <div class=\"card bg-panel\"><div class=\"card-body\">
     <div class=\"row g-2 mb-3\">
-      <div class=\"col-md-4\"><input id=\"search\" class=\"form-control\" placeholder=\"Search name/category\"></div>
+      <div class=\"col-md-4\"><label class=\"form-label\">Search by name</label><input id=\"search\" class=\"form-control\" placeholder=\"Search name/category\"></div>
       <div class=\"col-6 col-md-2\"><label class=\"form-label\">Wayland min</label><select id=\"wMin\" class=\"form-select\"></select></div>
       <div class=\"col-6 col-md-2\"><label class=\"form-label\">Wayland max</label><select id=\"wMax\" class=\"form-select\"></select></div>
       <div class=\"col-6 col-md-2\"><label class=\"form-label\">XLibre min</label><select id=\"xMin\" class=\"form-select\"></select></div>
@@ -234,7 +241,19 @@ const colors = ['#dc3545','#fd7e14','#ffc107','#6c757d','#0d6efd','#198754'];
 const state = {{ sortKey: 'name', sortDir: 1, page: 1 }};
 
 function pct(n,t) {{ return t ? ((n/t)*100).toFixed(1)+'%' : '0.0%'; }}
-function badge(n) {{ const cls=n>=4?'text-bg-success':(n>=2?'text-bg-warning':'text-bg-danger'); return `<span class="badge ${{cls}} score-badge">${{n}}</span>`; }}
+//function badge(n) {{ const cls=n>=4?'text-bg-success':(n>=2?'text-bg-warning':'text-bg-danger'); return `<span class="badge ${{cls}} score-badge">${{n}}</span>`; }}
+function badge(n) {{ 
+  let cls = '';
+  switch (n) {{
+    case 0: cls = 'text-bg-score-0'; break;
+    case 1: cls = 'text-bg-score-1'; break;
+    case 2: cls = 'text-bg-score-2'; break;
+    case 3: cls = 'text-bg-score-3'; break;
+    case 4: cls = 'text-bg-score-4'; break;
+    case 5: cls = 'text-bg-score-5'; break;
+  }}
+  return `<span class="badge ${{cls}} score-badge">${{n}}</span>`; 
+}}
 function makeLegend(elId, counts, total) {{
   const rows = labels.map(l => `<tr><td>${{l}}</td><td>${{counts[l]||0}}</td><td>${{pct(counts[l]||0,total)}}</td></tr>`).join('');
   document.getElementById(elId).innerHTML = `<thead><tr><th>Score</th><th>Count</th><th>%</th></tr></thead><tbody>${{rows}}</tbody>`;
